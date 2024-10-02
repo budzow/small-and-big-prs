@@ -14,6 +14,3 @@ jobs:
         with:
           repository: ${{ github.repository }}
           ref: refs/pull/2/merge  # Fetch the content of pull request #2
-
-      - name: Output PR Number
-        run: echo "Pull Request Number: 2"
