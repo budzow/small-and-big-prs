@@ -9,8 +9,11 @@ jobs:
     name: Check PR #2
     runs-on: ubuntu-latest
     steps:
-      - name: Set PR Number
-        id: set-pr-number
-        run: echo "::set-output name=pr_number::2"
+      - name: Checkout PR #2
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: refs/pull/2/merge  # Fetch the content of pull request #2
+
       - name: Output PR Number
-        run: echo "Pull Request Number: ${{ steps.set-pr-number.outputs.pr_number }}"
+        run: echo "Pull Request Number: 2"
