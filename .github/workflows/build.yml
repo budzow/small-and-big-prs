@@ -1,32 +1,16 @@
-name: Build
+name: Daily PR Check
 
 on:
   schedule:
-    - cron: '19 15 * * *'  # Every day at 15:18 for PR #1
-    - cron: '19 15 * * *'  # Every day at 15:19 for PR #2
+    - cron: '25 15 * * *'  # Every day at 15:25
 
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  check-pr:
+    name: Check PR #2
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set PR Number
         id: set-pr-number
-        run: echo "::set-output name=pr_number::${{ github.event.pull_request.number }}"
-        if: github.event_name == 'pull_request'
-      - name: SonarCloud Scan for PR #1
-        if: github.event_name == 'schedule' && github.event.schedule == '0 9 * * *'
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - name: SonarCloud Scan for PR #2
-        if: github.event_name == 'schedule' && github.event.schedule == '1 9 * * *'
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: echo "::set-output name=pr_number::2"
+      - name: Output PR Number
+        run: echo "Pull Request Number: ${{ steps.set-pr-number.outputs.pr_number }}"
