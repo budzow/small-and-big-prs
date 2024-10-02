@@ -2,7 +2,7 @@ name: Daily PR Check
 
 on:
   schedule:
-    - cron: '30 15 * * *'  # Every day at 15:30
+    - cron: '45 15 * * *'  # Every day at 15:45
 
 jobs:
   check-pr:
