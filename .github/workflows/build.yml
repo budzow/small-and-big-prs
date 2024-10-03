@@ -2,7 +2,7 @@ name: Daily PR Check
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Every 10 minutes
+    - cron: '0 */12 * * *'  # Every 10 minutes
   pull_request:
     types: [opened, synchronize, reopened]
 
