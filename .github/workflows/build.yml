@@ -3,6 +3,8 @@ name: Daily PR Check
 on:
   schedule:
     - cron: '*/10 * * * *'  # Every 10 minutes
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   check-pr:
@@ -10,12 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR #2
+        if: github.event.pull_request.number == 2 || github.event_name == 'schedule'
         uses: actions/checkout@v4
         with:
           repository: ${{ github.repository }}
           ref: refs/pull/2/merge  # Fetch the content of pull request #2
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: SonarCloud Scan
+        if: github.event.pull_request.number == 2 || github.event_name == 'schedule'
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
