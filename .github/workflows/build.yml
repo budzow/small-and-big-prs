@@ -6,10 +6,12 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+  schedule:
+    - cron: '0 7 * * *'  # Runs every day at 7 AM
 
 jobs:
   sonarcloud:
-    if: github.event.pull_request.number == 2
+    if: github.event_name == 'schedule' || github.event.pull_request.number == 2
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
