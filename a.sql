@@ -1,0 +1,6 @@
+delete from tab; 
+ 
+ 
+ 
+ 
+ 
